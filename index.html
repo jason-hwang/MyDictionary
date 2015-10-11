@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My Dictionary</title>
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+	<div id="controls">
+	    <webview id="myWebview" src="http://m.dic.naver.com"></webview>
+	</div>
+	<div id="setting-btn"></div>
+	<div id="setting-page">
+		<div class="header">
+			Settings
+		</div>
+		<div class="content">
+			<p class="p-title">Enter the URL you want.</p>
+			<input id="url" idx="0" type="text" placeholder="URL..">
+			<p class="p-title">Recommandation List</p>
+			<p title="http://m.dic.naver.com">
+				<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com" checked>Naver Dictionary
+			</p>
+			<p title="http://dic.daum.net">
+				<input type="radio" name="select_dic" idx="1" value="http://dic.daum.net">Daum Dictionary
+			</p>
+			<p title="etc">
+				<input type="radio" name="select_dic" idx="-1" value="http://m.naver.com">etc..
+			</p>
+		</div>
+		<div class="footer">
+			<div id="save">Save</div>
+			<div id="reset">Reset</div>
+			<div id="cancel">Cancel</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="default.js"></script>
+</body>
+</html>
