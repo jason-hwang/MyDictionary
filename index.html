@@ -15,17 +15,24 @@
 			Settings
 		</div>
 		<div class="content">
-			<p class="p-title">Enter the URL you want.</p>
-			<input id="url" idx="0" type="text" placeholder="URL..">
-			<p class="p-title">Recommandation List</p>
+			<p class="p-title">Recommendation List</p>
 			<p title="http://m.dic.naver.com">
-				<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com" checked>Naver Dictionary
+				<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com" checked>&nbsp;&nbsp;Naver Dictionary(All)
+			</p>
+			<p title="http://m.endic.naver.com/">
+				<input type="radio" name="select_dic" idx="1" value="http://m.endic.naver.com/" checked>&nbsp;&nbsp;Naver Dictionary(for English)
 			</p>
 			<p title="http://dic.daum.net">
-				<input type="radio" name="select_dic" idx="1" value="http://dic.daum.net">Daum Dictionary
+				<input type="radio" name="select_dic" idx="2" value="http://dic.daum.net">&nbsp;&nbsp;Daum Dictionary
+			</p>
+			<p title="http://www.urbandictionary.com/">
+				<input type="radio" name="select_dic" idx="3" value="http://www.urbandictionary.com/">&nbsp;&nbsp;urbandictionary.com
 			</p>
 			<p title="etc">
-				<input type="radio" name="select_dic" idx="-1" value="http://m.naver.com">etc..
+				<input type="radio" name="select_dic" idx="9" value="">
+				<input id="url" type="text" placeholder="Enter the URL you want." readonly>
+				<span style="color:#696969;padding-left:20px">* Please, including </span>
+				<span style="color:#4CA9D0;">http://</span>
 			</p>
 		</div>
 		<div class="footer">

@@ -2,8 +2,9 @@
 
 var myApp = {
 	id:0,
-	defaultUrl:"http://m.endic.naver.com/",
+	idxOfEtc:"9",
 	defaultIdx:0,
+	defaultUrl:"http://m.endic.naver.com/",
 
 	init:function(){
 
@@ -29,13 +30,20 @@ var myApp = {
 		setBtn.onclick = function(){
 			var storage = chrome.storage.local;
 			storage.get(function(result){
-				if(result.url){
-					url.value = result.url;
-					radioList[result.idx].checked = true;
-				}else{
-					url.value = myApp.defaultUrl;
-					radioList[myApp.defaultIdx].checked = true;
+				if(typeof result.idx==="undefined"){
+					return;
 				}
+
+				// if idx is Etc, chage state (input box)
+				if(result.idx!==myApp.idxOfEtc){
+					myApp.setReadOnly(true);
+				}else{
+					url.value = result.url;
+		        	myApp.setReadOnly(false);
+				}
+
+				radioList[result.idx].checked = true;
+
 			});
 
 			myApp.showSettingPage();
@@ -47,8 +55,14 @@ var myApp = {
 		   (function(i){
 				var radio = radioList[i];
 		    	radio.onclick = function(){
-		        	url.value = this.value;
-		        	url.setAttribute("idx", this.getAttribute("idx"));
+		    		var idx = this.getAttribute("idx");
+
+		    		//if Naver or Daum
+		        	if(idx!==myApp.idxOfEtc){
+		        		myApp.setReadOnly(true);
+		        	}else{
+		        		myApp.setReadOnly(false);
+		        	}
 		        }
 		    })(idx);
 		}
@@ -65,8 +79,6 @@ var myApp = {
 		var url = "";
 
 		storage.get(function(result){
-
-			console.log(result);
 
 			if(typeof result.url==="undefined"){
 				result.url = myApp.defaultUrl;
@@ -94,19 +106,27 @@ var myApp = {
 
 	doSave: function(){
 		var storage = chrome.storage.local;
-		var url = document.querySelector("#url").value;
-		var idx = document.querySelector("#url").getAttribute("idx");
+		var checkedRadio = document.querySelector('input[name="select_dic"]:checked');
+		var idx = checkedRadio.getAttribute("idx");
+		var url = "";
 		var webview = document.querySelector("#myWebview");
+		var notiMsg = "Success :)";
+
+		if(idx===myApp.idxOfEtc){
+			url = document.querySelector("#url").value;
+		}else{
+			url = checkedRadio.value;
+		}
 		
 		if(url==""){
-			myApp.showNotification("Set default dicionary:"+myApp.defaultUrl);
+			notiMsg = "Set default dicionary:"+myApp.defaultUrl;
 			url = myApp.defaultUrl;
 			idx = myApp.defaultIdx;
 		}
 
 		var obj = {"url":url, "idx":idx};
 		storage.set(obj);
-		myApp.showNotification("Successfully:)");
+		myApp.showNotification(notiMsg);
 		myApp.hideSettingPage();
 		webview.setAttribute("src", url);
 	},
@@ -124,16 +144,11 @@ var myApp = {
 		};
 
 		storage.set(obj);
-		myApp.showNotification("Reset Options...");
+		myApp.showNotification("Reset :)");
 		webview.setAttribute("src", myApp.defaultUrl);
 
 		var radioList = document.querySelectorAll("input[name='select_dic']");
-		radioList[myApp.defaultIdx].checked = true;
-
-		var url = document.querySelector("#url");
-		url.value = myApp.defaultUrl;
-		url.setAttribute("idx", myApp.defaultIdx);
-		
+		radioList[myApp.defaultIdx].checked = true;		
 	},
 
 	showSettingPage: function(){
@@ -167,9 +182,19 @@ var myApp = {
 	creationCallback: function(notID) {
 		setTimeout(function() {
 			chrome.notifications.clear(notID, function(wasCleared) {
-				console.log("Notification " + notID + " cleared: " + wasCleared);
+				//console.log("Notification " + notID + " cleared: " + wasCleared);
 			});
-		}, 2000);
+		}, 3000);
+	},
+
+	setReadOnly: function(result){
+		if(result){
+			url.readOnly = true;
+    		url.style.setProperty("background-color", "#E8E8E8");
+    	}else{
+    		url.readOnly = false;
+    		url.style.setProperty("background-color", "#fff");
+    	}
 	}
 };
 
