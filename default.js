@@ -18,6 +18,7 @@ var myApp = {
 		var url = document.querySelector("#url");
 		var webview = document.querySelector("#myWebview");
 		var setBtn = document.querySelector("#setting-btn");
+		var backBtn = document.querySelector("#back-btn");
 
 		//set default dicionary site
 		this.getData(function(result){
@@ -47,6 +48,10 @@ var myApp = {
 			});
 
 			myApp.showSettingPage();
+		}
+
+		backBtn.onclick = function(){
+			webview.back();
 		}
 
 		//set Event for input box by radio button
