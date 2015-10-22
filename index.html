@@ -9,8 +9,9 @@
 	<div id="controls">
 	    <webview id="myWebview" src="http://m.dic.naver.com"></webview>
 	</div>
-	<div id="setting-btn"></div>
-	<div id="back-btn"></div>
+	<div id="setting-btn" title="Setting Button"></div>
+	<div id="back-btn" title="Backward Button"></div>
+	<div id="home-btn" title="Home Button"></div>
 	<div id="setting-page">
 		<div class="header">
 			Settings
@@ -18,22 +19,36 @@
 		<div class="content">
 			<p class="p-title">Recommendation List</p>
 			<p title="http://m.dic.naver.com">
-				<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com" checked>&nbsp;&nbsp;Naver Dictionary(All)
+				<label>
+					<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com" checked>
+					&nbsp;&nbsp;Naver Dictionary(All)
+				</label>
 			</p>
 			<p title="http://m.endic.naver.com/">
-				<input type="radio" name="select_dic" idx="1" value="http://m.endic.naver.com/" checked>&nbsp;&nbsp;Naver Dictionary(for English)
+				<label>
+					<input type="radio" name="select_dic" idx="1" value="http://m.endic.naver.com/" checked>
+					&nbsp;&nbsp;Naver Dictionary(for English)
+				</label>
 			</p>
 			<p title="http://dic.daum.net">
-				<input type="radio" name="select_dic" idx="2" value="http://dic.daum.net">&nbsp;&nbsp;Daum Dictionary
+				<label>
+					<input type="radio" name="select_dic" idx="2" value="http://dic.daum.net">
+					&nbsp;&nbsp;Daum Dictionary
+				</label>
 			</p>
 			<p title="http://www.urbandictionary.com/">
-				<input type="radio" name="select_dic" idx="3" value="http://www.urbandictionary.com/">&nbsp;&nbsp;urbandictionary.com
+				<label>
+					<input type="radio" name="select_dic" idx="3" value="http://www.urbandictionary.com/">
+					&nbsp;&nbsp;urbandictionary.com
+				</label>
 			</p>
 			<p title="etc">
-				<input type="radio" name="select_dic" idx="9" value="">
-				<input id="url" type="text" placeholder="Enter the URL you want." readonly>
-				<span style="color:#696969;padding-left:20px">* Please, including </span>
-				<span style="color:#4CA9D0;">http://</span>
+				<label>
+					<input type="radio" name="select_dic" idx="9" value="">
+					<input id="url" type="text" placeholder="Enter the URL you want." readonly>
+					<span style="color:#696969;padding-left:20px">* Please, including </span>
+					<span style="color:#4CA9D0;">http://</span>
+				</label>
 			</p>
 		</div>
 		<div class="footer">

@@ -5,6 +5,7 @@ var myApp = {
 	idxOfEtc:"9",
 	defaultIdx:0,
 	defaultUrl:"http://m.endic.naver.com/",
+	currentUrl:"",
 
 	init:function(){
 
@@ -19,10 +20,12 @@ var myApp = {
 		var webview = document.querySelector("#myWebview");
 		var setBtn = document.querySelector("#setting-btn");
 		var backBtn = document.querySelector("#back-btn");
+		var homeBtn = document.querySelector("#home-btn");
 
 		//set default dicionary site
 		this.getData(function(result){
 			webview.setAttribute("src", result.url);
+			myApp.currentUrl = result.url;
 		});
 
 		save.onclick = this.doSave;
@@ -52,6 +55,10 @@ var myApp = {
 
 		backBtn.onclick = function(){
 			webview.back();
+		}
+
+		homeBtn.onclick = function(){
+			webview.src = myApp.currentUrl;
 		}
 
 		//set Event for input box by radio button
@@ -101,8 +108,8 @@ var myApp = {
 	  var controls = document.querySelector('#controls');
 	  var windowWidth = document.documentElement.clientWidth;
 	  var windowHeight = document.documentElement.clientHeight;
-	  var webviewWidth = windowWidth;
-	  var webviewHeight = windowHeight;
+	  var webviewWidth = windowWidth - 14;
+	  var webviewHeight = windowHeight - 8;
 
 	  webview.style.width = webviewWidth + 'px';
 	  webview.style.height = webviewHeight + 'px';
@@ -134,6 +141,7 @@ var myApp = {
 		myApp.showNotification(notiMsg);
 		myApp.hideSettingPage();
 		webview.setAttribute("src", url);
+		myApp.currentUrl = url;
 	},
 
 	doCancel: function(){

@@ -59,6 +59,23 @@ h1 {
 	opacity:1;
 }
 
+#home-btn{
+	background-image:url("../home.png");
+	background-repeat: no-repeat;
+	background-size:40px;
+	position: fixed;
+	padding: 20px;
+    border-radius: 25px;
+    bottom: 14px;
+    left: 65px;
+    opacity: 0.5;
+    cursor:pointer;
+}
+
+#home-btn:hover{
+	opacity:1;
+}
+
 #setting-page{
 	display: none;
 	margin: 20px;
