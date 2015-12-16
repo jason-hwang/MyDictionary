@@ -1,15 +1,15 @@
 {
   "manifest_version": 2,
   "name": "My Dictionary",
-  "version": "0.4",
-  "minimum_chrome_version": "23",
+  "version": "0.5",
+  "minimum_chrome_version": "24",
   "icons": {
-    "16": "icon_16.png",
-    "128": "icon_128.png"
+    "16": "images/icon_16.png",
+    "128": "images/icon_128.png"
   },
   "app": {
     "background": {
-      "scripts": ["main.js"]
+      "scripts": ["scripts/main.js"]
     }
   },
   "permissions": [

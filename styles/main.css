@@ -26,7 +26,7 @@ h1 {
 }
 
 #setting-btn{
-	background-image:url("../setting.png");
+	background-image:url("../images/setting.png");
 	background-repeat: no-repeat;
 	background-size:40px;
 	position: fixed;
@@ -43,7 +43,7 @@ h1 {
 }
 
 #back-btn{
-	background-image:url("../back.png");
+	background-image:url("../images/back.png");
 	background-repeat: no-repeat;
 	background-size:40px;
 	position: fixed;
@@ -60,7 +60,7 @@ h1 {
 }
 
 #home-btn{
-	background-image:url("../home.png");
+	background-image:url("../images/home.png");
 	background-repeat: no-repeat;
 	background-size:40px;
 	position: fixed;
