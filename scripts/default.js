@@ -11,6 +11,7 @@ var myApp = {
 
 		this.doLayout();
 		window.onresize = this.doLayout;
+		document.addEventListener('keydown', this.getKeyEvent, false);
 
 		var save = document.querySelector("#save");
 		var cancel = document.querySelector("#cancel");
@@ -208,6 +209,21 @@ var myApp = {
     		url.readOnly = false;
     		url.style.setProperty("background-color", "#fff");
     	}
+	},
+
+	getKeyEvent: function(e){
+		var webview = document.querySelector('webview');
+		var code = e.keyCode;
+		var __BKSP = 8;
+		var __REFRESH = 116;
+		var __HOME = 115;
+
+		switch(code){
+			case __BKSP : webview.back(); break;
+			case __HOME : webview.src = myApp.currentUrl; break;
+			case __REFRESH : webview.reload(); break;
+			default : break;;
+		}
 	}
 };
 
