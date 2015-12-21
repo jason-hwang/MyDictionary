@@ -219,7 +219,7 @@ var myApp = {
 		var __HOME = 115;
 
 		switch(code){
-			case __BKSP : webview.back(); break;
+			case __BKSP : break;
 			case __HOME : webview.src = myApp.currentUrl; break;
 			case __REFRESH : webview.reload(); break;
 			default : break;;
