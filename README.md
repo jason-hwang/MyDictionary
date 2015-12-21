@@ -3,36 +3,9 @@
 
 # MyDictionary
 
-This is a starter application. It contains a basic manifest file with no
-additional permissions. The manifest denotes a background script, main.js,
-detailed below:
+사용자가 원하는 모바일 사이트를 설정해서 사용할 수 있습니다.
+(e.g. 모바일 영어사전 등)
 
-```javascript
-chrome.app.runtime.onLaunched.addListener(function() {
-  // Center window on screen.
-  var screenWidth = screen.availWidth;
-  var screenHeight = screen.availHeight;
-  var width = 500;
-  var height = 300;
+# ScreenShopt
 
-  chrome.app.window.create('index.html', {
-    id: "helloWorldID",
-    outerBounds: {
-      width: width,
-      height: height,
-      left: Math.round((screenWidth-width)/2),
-      top: Math.round((screenHeight-height)/2)
-    }
-  });
-});
-```
-
-This simply waits for the launch event for the application (`chrome.app.runtime.onLaunched.addListener`)
-and, at that point, creates a window using a basic HTML page, index.html, as the source.
-
-## Resources
-
-* [Runtime](http://developer.chrome.com/apps/app.runtime.html)
-* [Window](http://developer.chrome.com/apps/app.window.html)
-
-
+<img src="screenshots/dic.png"/>
