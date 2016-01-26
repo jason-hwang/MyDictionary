@@ -22,6 +22,7 @@ var myApp = {
 		var setBtn = document.querySelector("#setting-btn");
 		var backBtn = document.querySelector("#back-btn");
 		var homeBtn = document.querySelector("#home-btn");
+		var blockWindow = document.querySelector("#block-window");
 
 		//set default dicionary site
 		this.getData(function(result){
@@ -60,6 +61,10 @@ var myApp = {
 
 		homeBtn.onclick = function(){
 			webview.src = myApp.currentUrl;
+		}
+
+		blockWindow.onclick = function(){
+			myApp.hideSettingPage();
 		}
 
 		//set Event for input box by radio button
@@ -168,16 +173,18 @@ var myApp = {
 	showSettingPage: function(){
 		var setPage = document.querySelector("#setting-page");
 		setPage.style.setProperty("display", "block");
+		this.showBlockWindow();
 	},
 
 	hideSettingPage: function(){
 		var setPage = document.querySelector("#setting-page");
 		setPage.style.setProperty("display", "none");
+		this.hideBlockWindow();
 	},
 
 	showNotification: function(msg){
 		var notOptions = {
-			iconUrl: chrome.runtime.getURL("/setting_64x64.png"),
+			iconUrl: chrome.runtime.getURL("/images/setting_64x64.png"),
 			priority: 0,
 			buttons: [],
 			type : "basic",
@@ -224,6 +231,16 @@ var myApp = {
 			case __REFRESH : webview.reload(); break;
 			default : break;;
 		}
+	},
+
+	showBlockWindow: function(){
+		var blockWindow = document.querySelector("#block-window");
+		blockWindow.style.setProperty('display', 'block');
+	},
+
+	hideBlockWindow: function(){
+		var blockWindow = document.querySelector("#block-window");
+		blockWindow.style.setProperty('display', 'none');
 	}
 };
 
