@@ -114,7 +114,7 @@ var myApp = {
 	  var controls = document.querySelector('#controls');
 	  var windowWidth = document.documentElement.clientWidth;
 	  var windowHeight = document.documentElement.clientHeight;
-	  var webviewWidth = windowWidth;
+	  var webviewWidth = windowWidth - 16;
 	  var webviewHeight = windowHeight - 8;
 
 	  webview.style.width = webviewWidth + 'px';
