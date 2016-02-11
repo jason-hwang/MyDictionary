@@ -1,15 +1,16 @@
 
 
 var myApp = {
-	id:0,
-	idxOfEtc:"9",
-	defaultIdx:0,
-	defaultUrl:"http://m.endic.naver.com/",
-	currentUrl:"",
+	id: 0,
+	idxOfEtc: "9",
+	defaultIdx: 0,
+	defaultUrl: "http://m.endic.naver.com/",
+	currentUrl: "",
+	OS: "",
 
 	init:function(){
-
 		this.doLayout();
+
 		window.onresize = this.doLayout;
 		document.addEventListener('keydown', this.getKeyEvent, false);
 
@@ -110,16 +111,20 @@ var myApp = {
 
 
 	doLayout: function() {
-	  var webview = document.querySelector('webview');
-	  var controls = document.querySelector('#controls');
-	  var windowWidth = document.documentElement.clientWidth;
-	  var windowHeight = document.documentElement.clientHeight;
-	  var webviewWidth = windowWidth - 16;
-	  var webviewHeight = windowHeight - 8;
+		var webview = document.querySelector('webview');
+		var controls = document.querySelector('#controls');
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = document.documentElement.clientHeight;
+		var webviewWidth = windowWidth;
+		var webviewHeight = windowHeight - 8;
+		var extraWidth = 0;
 
-	  webview.style.width = webviewWidth + 'px';
-	  webview.style.height = webviewHeight + 'px';
+		if(myApp.OS==="mac"){
+			extraWidth = 16;	
+		}
 
+		webview.style.width = webviewWidth - extraWidth + 'px';
+		webview.style.height = webviewHeight + 'px';
 	},
 
 	doSave: function(){
@@ -245,5 +250,8 @@ var myApp = {
 };
 
 window.onload = function(){
-	myApp.init();
+	chrome.runtime.getPlatformInfo(function(info) {
+		myApp.OS = info.os;
+		myApp.init();
+	});
 };
