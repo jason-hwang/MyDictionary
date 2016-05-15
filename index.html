@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>My Dictionary</title>
-    <link href="styles/main.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<title>My Dictionary</title>
+	<link href="styles/main.css" rel="stylesheet">
 </head>
 <body> 
 	<div id="controls">
-	    <webview id="myWebview" src="http://m.dic.naver.com" partition="persist:myDictionary"></webview>
+		<webview id="myWebview" src="http://m.dic.naver.com" partition="persist:myDictionary"></webview>
 	</div>
 	<div id="block-window"></div>
 	<div id="back-btn" title="Backward Button"></div>
@@ -45,11 +45,16 @@
 			</p>
 			<p title="etc">
 				<label>
-					<input type="radio" name="select_dic" idx="9" value="">
+					<input type="radio" name="select_dic" idx="4" value="">
 					<input id="url" type="text" placeholder="Enter the URL you want." readonly>
 					<span style="color:#696969;padding-left:20px">* Please, including </span>
 					<span style="color:#4CA9D0;">http://</span>
 				</label>
+			</p>
+			<p class="p-title">Always on Top</p>
+			<p>
+				<label><input type="radio" name="always-on-options" value="ON"> On</label>
+				<label><input type="radio" name="always-on-options" value="OFF" checked> Off</label>
 			</p>
 		</div>
 		<div class="footer">

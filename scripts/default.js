@@ -2,9 +2,10 @@
 
 var myApp = {
 	id: 0,
-	idxOfEtc: "9",
-	defaultIdx: 0,
+	idxOfEtc: "4",
+	defaultIdx: 1,
 	defaultUrl: "http://m.endic.naver.com/",
+	defaultAlwaysOnTop: false,
 	currentUrl: "",
 	OS: "",
 
@@ -18,6 +19,7 @@ var myApp = {
 		var cancel = document.querySelector("#cancel");
 		var reset = document.querySelector("#reset");
 		var radioList = document.querySelectorAll("input[name='select_dic']");
+		var alwaysOnOptions = document.querySelectorAll("input[name='always-on-options']");
 		var url = document.querySelector("#url");
 		var webview = document.querySelector("#myWebview");
 		var setBtn = document.querySelector("#setting-btn");
@@ -29,13 +31,21 @@ var myApp = {
 		this.getData(function(result){
 			webview.setAttribute("src", result.url);
 			myApp.currentUrl = result.url;
+
+			if(typeof result.alwaysOnTop !== "undefined") {
+				myApp.setAlwaysOnTop(result.alwaysOnTop);
+			}
 		});
 
 		save.onclick = this.doSave;
 		cancel.onclick = this.doCancel;
 		reset.onclick = this.doReset;
+
+		// when user click, set setting items
 		setBtn.onclick = function(){
 			var storage = chrome.storage.local;
+
+			// Successfully get user data
 			storage.get(function(result){
 				if(typeof result.idx==="undefined"){
 					return;
@@ -49,8 +59,18 @@ var myApp = {
 		        	myApp.setReadOnly(false);
 				}
 
+				// Set Current radio status
 				radioList[result.idx].checked = true;
 
+				if(typeof result.alwaysOnTop === "undefined"){
+					result.alwaysOnTop = myApp.defaultAlwaysOnTop;
+				}
+
+				if(result.alwaysOnTop){
+					alwaysOnOptions[0].checked = true;
+				}else{
+					alwaysOnOptions[1].checked = true;
+				}
 			});
 
 			myApp.showSettingPage();
@@ -70,20 +90,20 @@ var myApp = {
 
 		//set Event for input box by radio button
 		for(var i=0; i<radioList.length; i++){
-		   var idx = i;
-		   (function(i){
+			var idx = i;
+			(function(i){
 				var radio = radioList[i];
-		    	radio.onclick = function(){
-		    		var idx = this.getAttribute("idx");
+				radio.onclick = function(){
+					var idx = this.getAttribute("idx");
 
-		    		//if Naver or Daum
-		        	if(idx!==myApp.idxOfEtc){
-		        		myApp.setReadOnly(true);
-		        	}else{
-		        		myApp.setReadOnly(false);
-		        	}
-		        }
-		    })(idx);
+					//if Naver or Daum
+					if(idx!==myApp.idxOfEtc){
+						myApp.setReadOnly(true);
+					}else{
+						myApp.setReadOnly(false);
+					}
+				}
+			})(idx);
 		}
 
 
@@ -101,7 +121,14 @@ var myApp = {
 
 			if(typeof result.url==="undefined"){
 				result.url = myApp.defaultUrl;
-				result.idx = myApp.defaultIdx;
+			}
+
+			if(typeof result.idx === "undefined"){
+				result.idx = myApp.defaultIdx;;
+			}
+
+			if(typeof result.alwaysOnTop === "undefined"){
+				result.alwaysOnTop = myApp.defaultAlwaysOnTop;
 			}
 
 			callback(result);
@@ -120,7 +147,7 @@ var myApp = {
 		var extraWidth = 0;
 
 		if(myApp.OS==="mac"){
-			extraWidth = 16;	
+			extraWidth = 16;
 		}
 
 		webview.style.width = webviewWidth - extraWidth + 'px';
@@ -130,6 +157,7 @@ var myApp = {
 	doSave: function(){
 		var storage = chrome.storage.local;
 		var checkedRadio = document.querySelector('input[name="select_dic"]:checked');
+		var alwaysOnTop = document.querySelector('input[name="always-on-options"]:checked').getAttribute("value");
 		var idx = checkedRadio.getAttribute("idx");
 		var url = "";
 		var webview = document.querySelector("#myWebview");
@@ -147,12 +175,25 @@ var myApp = {
 			idx = myApp.defaultIdx;
 		}
 
-		var obj = {"url":url, "idx":idx};
+		alwaysOnTop = alwaysOnTop === "ON" ? true : false;
+
+		var obj = {
+			"url": url, 
+			"idx": idx,
+			"alwaysOnTop": alwaysOnTop
+		};
+
+		// save user data
 		storage.set(obj);
+		
+		// change settings
 		myApp.showNotification(notiMsg);
 		myApp.hideSettingPage();
-		webview.setAttribute("src", url);
+		myApp.setAlwaysOnTop(alwaysOnTop);
 		myApp.currentUrl = url;
+		
+		// change URL
+		webview.setAttribute("src", url);
 	},
 
 	doCancel: function(){
@@ -164,7 +205,8 @@ var myApp = {
 		var storage = chrome.storage.local;
 		var obj = {
 			"url":myApp.defaultUrl, 
-			"idx":myApp.defaultIdx
+			"idx":myApp.defaultIdx,
+			"defaultAlwaysOnTop": myApp.defaultAlwaysOnTop
 		};
 
 		storage.set(obj);
@@ -172,7 +214,10 @@ var myApp = {
 		webview.setAttribute("src", myApp.defaultUrl);
 
 		var radioList = document.querySelectorAll("input[name='select_dic']");
-		radioList[myApp.defaultIdx].checked = true;		
+		radioList[myApp.defaultIdx].checked = true;
+
+		var alwaysOnOptions = document.querySelectorAll("input[name='always-on-options']");
+		alwaysOnOptions[1].checked = true;
 	},
 
 	showSettingPage: function(){
@@ -246,6 +291,10 @@ var myApp = {
 	hideBlockWindow: function(){
 		var blockWindow = document.querySelector("#block-window");
 		blockWindow.style.setProperty('display', 'none');
+	},
+
+	setAlwaysOnTop: function(bool) {
+		chrome.app.window.current().setAlwaysOnTop(bool);
 	}
 };
 

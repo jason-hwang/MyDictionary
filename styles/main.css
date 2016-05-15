@@ -1,6 +1,5 @@
 html, body {
-  height: 100%;
-  font-family: "hevetica", sans-serif;
+    height: 100%;
 }
 
 h1 {
@@ -96,7 +95,7 @@ h1 {
     bottom: 48px;
     right: 5px;
     width: 250px;
-    height: 325px;
+    height: 380px;
     box-shadow: 1px 1px 6px -1px;
 }
 
@@ -111,7 +110,7 @@ h1 {
 
 #setting-page .content{
 	padding:20px;
-	height:62%;
+	height:70%;
 	text-align:left;
 }
 
