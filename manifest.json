@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "My Dictionary",
   "short_name":"My Dictionary",
-  "version": "0.84",
+  "version": "0.85",
   "minimum_chrome_version": "24",
   "icons": {
     "16": "images/icon_16.png",
@@ -16,6 +16,7 @@
   "permissions": [
     "webview",
     "fullscreen", "overrideEscFullscreen",
-    "storage", "notifications"
+    "storage", "notifications",
+    "alwaysOnTopWindows"
   ]
 }
