@@ -6,10 +6,16 @@ var myApp = {
 	defaultIdx: 1,
 	defaultUrl: "http://m.endic.naver.com/",
 	defaultAlwaysOnTop: false,
+	defaultUserAgent: false,
+	defaultUserAgentString: "",
+	mobileUserAgentString: "Mozilla/5.0 (Linux; U; Android 4.1.1; en-gb; Build/KLP) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30",
 	currentUrl: "",
 	OS: "",
+	webview: null,
 
 	init:function(){
+		var self = this;
+
 		this.doLayout();
 
 		window.onresize = this.doLayout;
@@ -20,12 +26,17 @@ var myApp = {
 		var reset = document.querySelector("#reset");
 		var radioList = document.querySelectorAll("input[name='select_dic']");
 		var alwaysOnOptions = document.querySelectorAll("input[name='always-on-options']");
+		var alwaysMobileUAOptions = document.querySelectorAll("input[name='always-mb-ua']");
+		
 		var url = document.querySelector("#url");
 		var webview = document.querySelector("#myWebview");
 		var setBtn = document.querySelector("#setting-btn");
 		var backBtn = document.querySelector("#back-btn");
 		var homeBtn = document.querySelector("#home-btn");
 		var blockWindow = document.querySelector("#block-window");
+
+		// set default user agent
+		this.defaultUserAgentString = webview.getUserAgent();
 
 		//set default dicionary site
 		this.getData(function(result){
@@ -35,7 +46,16 @@ var myApp = {
 			if(typeof result.alwaysOnTop !== "undefined") {
 				myApp.setAlwaysOnTop(result.alwaysOnTop);
 			}
+
+			if(typeof result.alwaysMobileUA !== "undefined") {
+				// Mobile UserAgent 적용해야 할 경우
+				if(result.alwaysMobileUA) {
+					webview.setUserAgentOverride(self.mobileUserAgentString);
+				}
+			}
 		});
+
+		this.webview = webview;
 
 		save.onclick = this.doSave;
 		cancel.onclick = this.doCancel;
@@ -66,10 +86,20 @@ var myApp = {
 					result.alwaysOnTop = myApp.defaultAlwaysOnTop;
 				}
 
+				if(typeof result.alwaysMobileUA === "undefined"){
+					result.alwaysMobileUA = myApp.defaultUserAgent;
+				}
+
 				if(result.alwaysOnTop){
 					alwaysOnOptions[0].checked = true;
-				}else{
+				} else {
 					alwaysOnOptions[1].checked = true;
+				}
+
+				if(result.alwaysMobileUA){
+					alwaysMobileUAOptions[0].checked = true;
+				} else {
+					alwaysMobileUAOptions[1].checked = true;
 				}
 			});
 
@@ -158,6 +188,7 @@ var myApp = {
 		var storage = chrome.storage.local;
 		var checkedRadio = document.querySelector('input[name="select_dic"]:checked');
 		var alwaysOnTop = document.querySelector('input[name="always-on-options"]:checked').getAttribute("value");
+		var alwaysMobileUA = document.querySelector('input[name="always-mb-ua"]:checked').getAttribute("value");
 		var idx = checkedRadio.getAttribute("idx");
 		var url = "";
 		var webview = document.querySelector("#myWebview");
@@ -176,11 +207,13 @@ var myApp = {
 		}
 
 		alwaysOnTop = alwaysOnTop === "ON" ? true : false;
+		alwaysMobileUA = alwaysMobileUA === "ON" ? true : false;
 
 		var obj = {
 			"url": url, 
 			"idx": idx,
-			"alwaysOnTop": alwaysOnTop
+			"alwaysOnTop": alwaysOnTop,
+			"alwaysMobileUA": alwaysMobileUA
 		};
 
 		// save user data
@@ -190,10 +223,20 @@ var myApp = {
 		myApp.showNotification(notiMsg);
 		myApp.hideSettingPage();
 		myApp.setAlwaysOnTop(alwaysOnTop);
-		myApp.currentUrl = url;
+
+		if(myApp.currentUrl !== url){
+			myApp.currentUrl = url;
 		
-		// change URL
-		webview.setAttribute("src", url);
+			// change URL
+			webview.setAttribute("src", url);
+		}
+
+		if(alwaysMobileUA) {
+			webview.setUserAgentOverride(myApp.mobileUserAgentString);
+		} else {
+			webview.setUserAgentOverride(myApp.defaultUserAgentString);
+		}
+
 	},
 
 	doCancel: function(){
