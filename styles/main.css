@@ -1,25 +1,22 @@
-html, body {
+html,
+body {
     height: 100%;
 }
 
 h1 {
-  position: absolute;
-  bottom: 20px;
-  text-align: center;
-  width: 100%;
-  line-height: 120%;
-  font-family: Arial, sans-serif;
-  color: rgb(66,66,66);
-  letter-spacing: -0.05em;
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+    line-height: 120%;
+    font-family: Arial, sans-serif;
+    color: rgb(66, 66, 66);
+    letter-spacing: -0.05em;
 }
 
-#controls{
-	
-}
-
-#block-window{
-	display:none;
-	width: 100%;
+#block-window {
+    display: none;
+    width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
@@ -28,68 +25,68 @@ h1 {
     opacity: 0.5;
 }
 
-#header{
-	height:20px;
-	padding:5px;
-	background-color:#DCDCDC;
+#header {
+    height: 20px;
+    padding: 5px;
+    background-color: #DCDCDC;
 }
 
-#setting-btn{
-	background-image:url("../images/setting.png");
-	background-repeat: no-repeat;
-	background-size:40px;
-	position: fixed;
-	padding: 20px;
+#setting-btn {
+    background-image: url("../images/setting.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: fixed;
+    padding: 20px;
     border-radius: 25px;
-    bottom:15px;
+    bottom: 15px;
     right: 20px;
     opacity: 0.5;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-#setting-btn:hover{
-	opacity:1;
+#setting-btn:hover {
+    opacity: 1;
 }
 
-#back-btn{
-	background-image:url("../images/back.png");
-	background-repeat: no-repeat;
-	background-size:40px;
-	position: fixed;
-	padding: 20px;
+#back-btn {
+    background-image: url("../images/back.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: fixed;
+    padding: 20px;
     border-radius: 25px;
-    bottom:15px;
-    left:20px;
+    bottom: 15px;
+    left: 20px;
     opacity: 0.5;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-#back-btn:hover{
-	opacity:1;
+#back-btn:hover {
+    opacity: 1;
 }
 
-#home-btn{
-	background-image:url("../images/home.png");
-	background-repeat: no-repeat;
-	background-size:40px;
-	position: fixed;
-	padding: 20px;
+#home-btn {
+    background-image: url("../images/home.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: fixed;
+    padding: 20px;
     border-radius: 25px;
     bottom: 14px;
     left: 65px;
     opacity: 0.5;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-#home-btn:hover{
-	opacity:1;
+#home-btn:hover {
+    opacity: 1;
 }
 
-#setting-page{
-	z-index:999;
-	display: none;
-	margin: 20px;
-	text-align:center;
+#setting-page {
+    z-index: 999;
+    display: none;
+    margin: 20px;
+    text-align: center;
     background-color: #ECECEC;
     position: fixed;
     bottom: 48px;
@@ -99,55 +96,53 @@ h1 {
     box-shadow: 1px 1px 6px -1px;
 }
 
-#setting-page .header{
-	color:white;
-	font-weight:bold;
-	font-size:15px;
-	padding:10px;
-	background-color:#1abc9c;
-	border-bottom: 1px solid #D2CECE;
+#setting-page .header {
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px;
+    background-color: #1abc9c;
+    border-bottom: 1px solid #D2CECE;
 }
 
-#setting-page .content{
-	padding:10px 20px 20px 20px;
-	height:75%;
-	text-align:left;
+#setting-page .content {
+    padding: 10px 20px 20px 20px;
+    height: 75%;
+    text-align: left;
 }
 
-#setting-page .content input#url{
-	background-color:#E8E8E8;
-	width:80%;
-	font-size:10px;
-	padding:2px;
-	margin-bottom:10px;
+#setting-page .content input#url {
+    background-color: #E8E8E8;
+    width: 80%;
+    font-size: 10px;
+    padding: 2px;
+    margin-bottom: 10px;
 }
 
-#setting-page .footer{
+#setting-page .footer {}
 
-}
-
-#setting-page .footer div{
-	font-size:12px;
-	font-weight: bold;
-	float:left;
-	color:#4C4C4C;
+#setting-page .footer div {
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    color: #4C4C4C;
     width: 33.3%;
     box-sizing: border-box;
     padding: 5px;
 }
 
-#setting-page .footer div:hover{
-	color:#1abc9c;
-	cursor:pointer;
+#setting-page .footer div:hover {
+    color: #1abc9c;
+    cursor: pointer;
 }
 
-.p-title{
-	font-weight:bold;
-	font-size:12px;
-	border-left: 4px solid #1abc9c;
+.p-title {
+    font-weight: bold;
+    font-size: 12px;
+    border-left: 4px solid #1abc9c;
     padding-left: 8px;
 }
 
-.clear{
-	clear:both;
+.clear {
+    clear: both;
 }

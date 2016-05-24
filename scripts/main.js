@@ -5,20 +5,20 @@
  * @see http://developer.chrome.com/apps/app.window.html
  */
 chrome.app.runtime.onLaunched.addListener(function() {
-  // Center window on screen.
-  var screenWidth = screen.availWidth;
-  var screenHeight = screen.availHeight;
-  var storage = chrome.storage.local;
-  var width = 400;
-  var height = 600;
+    // Center window on screen.
+    var screenWidth = screen.availWidth;
+    var screenHeight = screen.availHeight;
+    var storage = chrome.storage.local;
+    var width = 400;
+    var height = 600;
 
-  chrome.app.window.create('index.html', {
-    id: "myDictionary",
-    outerBounds: {
-      width: width,
-      height: height,
-      left: Math.round((screenWidth-width)/2),
-      top: Math.round((screenHeight-height)/2)
-    }
-  });
+    chrome.app.window.create('index.html', {
+        id: "myDictionary",
+        outerBounds: {
+            width: width,
+            height: height,
+            left: Math.round((screenWidth - width) / 2),
+            top: Math.round((screenHeight - height) / 2)
+        }
+    });
 });
