@@ -330,11 +330,19 @@ var myApp = {
         var webview = document.querySelector('webview');
         var code = e.keyCode;
         var __BKSP = 8;
-        var __REFRESH = 116;
+        var __BACKWARD = 113;
+        var __FORWARD = 114;
         var __HOME = 115;
+        var __REFRESH = 116;
 
         switch (code) {
             case __BKSP:
+                break;
+            case __BACKWARD:
+                webview.back();
+                break;
+            case __FORWARD:
+                webview.forward();
                 break;
             case __HOME:
                 webview.src = myApp.currentUrl;
