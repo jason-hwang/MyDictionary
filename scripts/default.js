@@ -6,13 +6,14 @@ var myApp = {
     id: 0,
     idxOfEtc: "4",
     defaultIdx: 1,
-    defaultUrl: "http://m.endic.naver.com/",
+    defaultUrl: "https://endic.naver.com/main.nhn?sLn=kr",
     defaultAlwaysOnTop: false,
-    defaultUserAgent: false,
+    defaultUserAgent: true,
     defaultUserAgentString: "",
-    mobileUserAgentString: "Mozilla/5.0 (Linux; U; Android 4.1.1; en-gb; \
-    						Build/KLP) AppleWebKit/534.30 (KHTML, like Gecko) \
-    						Version/4.0 Safari/534.30",
+    defaultAlwaysNavigation: true,
+    mobileUserAgentString: "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 \
+        Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) \
+        Chrome/71.0.3578.98 Mobile Safari/537.36",
     currentUrl: "",
     OS: "",
     webview: null,
@@ -31,6 +32,7 @@ var myApp = {
         var radioList = document.querySelectorAll("input[name='select_dic']");
         var alwaysOnOptions = document.querySelectorAll("input[name='always-on-options']");
         var alwaysMobileUAOptions = document.querySelectorAll("input[name='always-mb-ua']");
+        var alwaysNavigationButtons = document.querySelectorAll("input[name='always-navigation']");
 
         var url = document.querySelector("#url");
         var webview = document.querySelector("#myWebview");
@@ -56,6 +58,10 @@ var myApp = {
                 if (result.alwaysMobileUA) {
                     webview.setUserAgentOverride(self.mobileUserAgentString);
                 }
+            }
+
+            if (typeof result.alwaysNavigationButtons !== "undefined") {
+                myApp.setAlwaysNavigation(result.alwaysNavigationButtons);
             }
         });
 
@@ -104,6 +110,12 @@ var myApp = {
                     alwaysMobileUAOptions[0].checked = true;
                 } else {
                     alwaysMobileUAOptions[1].checked = true;
+                }
+
+                if (result.alwaysNavigationButtons) {
+                    alwaysNavigationButtons[0].checked = true;
+                } else {
+                    alwaysNavigationButtons[1].checked = true;
                 }
             });
 
@@ -184,6 +196,8 @@ var myApp = {
             extraWidth = 16;
         }
 
+        console.log(myApp.OS);
+
         webview.style.width = webviewWidth - extraWidth + 'px';
         webview.style.height = webviewHeight + 'px';
     },
@@ -202,6 +216,9 @@ var myApp = {
         var alwaysMobileUA =
             document.querySelector('input[name="always-mb-ua"]:checked')
             .getAttribute("value");
+        var alwaysNavigationButtons =
+            document.querySelector('input[name="always-navigation"]:checked')
+            .getAttribute('value');
 
         var url = "";
         var webview = document.querySelector("#myWebview");
@@ -221,12 +238,14 @@ var myApp = {
 
         alwaysOnTop = alwaysOnTop === "ON" ? true : false;
         alwaysMobileUA = alwaysMobileUA === "ON" ? true : false;
+        alwaysNavigationButtons = alwaysNavigationButtons === "ON" ? true : false;
 
         var obj = {
             "url": url,
             "idx": idx,
             "alwaysOnTop": alwaysOnTop,
-            "alwaysMobileUA": alwaysMobileUA
+            "alwaysMobileUA": alwaysMobileUA,
+            "alwaysNavigationButtons": alwaysNavigationButtons
         };
 
         // save user data
@@ -236,12 +255,10 @@ var myApp = {
         myApp.showNotification(notiMsg);
         myApp.hideSettingPage();
         myApp.setAlwaysOnTop(alwaysOnTop);
-
-        if (alwaysMobileUA) {
-            webview.setUserAgentOverride(myApp.mobileUserAgentString);
-        } else {
-            webview.setUserAgentOverride(myApp.defaultUserAgentString);
-        }
+        myApp.setAlwaysNavigation(alwaysNavigationButtons);
+        webview.setUserAgentOverride(
+            alwaysMobileUA ? myApp.mobileUserAgentString : myApp.defaultUserAgentString
+        );
 
         if (myApp.currentUrl !== url) {
             myApp.currentUrl = url;
@@ -262,12 +279,13 @@ var myApp = {
         var obj = {
             "url": myApp.defaultUrl,
             "idx": myApp.defaultIdx,
-            "defaultAlwaysOnTop": myApp.defaultAlwaysOnTop
+            "alwaysOnTop": myApp.defaultAlwaysOnTop,
+            "alwaysMobileUA": myApp.defaultUserAgent,
+            "alwaysNavigationButtons": myApp.defaultAlwaysNavigation
         };
 
         storage.set(obj);
         myApp.showNotification("Reset :)");
-        webview.setAttribute("src", myApp.defaultUrl);
 
         var radioList = document.querySelectorAll("input[name='select_dic']");
         radioList[myApp.defaultIdx].checked = true;
@@ -275,7 +293,35 @@ var myApp = {
         var alwaysOnOptions = document.querySelectorAll(
             "input[name='always-on-options']");
 
-        alwaysOnOptions[1].checked = true;
+        if (myApp.defaultAlwaysOnTop) {
+            alwaysOnOptions[0].checked = true;
+        } else {
+            alwaysOnOptions[1].checked = true;
+        }
+
+        var alwaysMobileUA = document.querySelectorAll("input[name='always-mb-ua']");
+        if (myApp.defaultUserAgent) {
+            alwaysMobileUA[0].checked = true;
+        } else {
+            alwaysMobileUA[1].checked = true;
+        }
+
+        myApp.webview.setUserAgentOverride(myApp.mobileUserAgentString);
+
+        var alwaysNavigations = document.querySelectorAll(
+            "input[name='always-navigation']");
+
+        if (myApp.defaultAlwaysNavigation) {
+            alwaysNavigations[0].checked = true;
+        } else {
+            alwaysNavigations[1].checked = true;
+        }
+
+        myApp.setAlwaysNavigation(myApp.defaultAlwaysNavigation);
+
+
+
+        webview.setAttribute("src", myApp.defaultUrl);
     },
 
     showSettingPage: function() {
@@ -367,6 +413,19 @@ var myApp = {
 
     setAlwaysOnTop: function(bool) {
         chrome.app.window.current().setAlwaysOnTop(bool);
+    },
+
+    setAlwaysNavigation: function(bool) {
+        var backBtn = document.querySelector('#back-btn');
+        var homeBtn = document.querySelector('#home-btn');
+
+        if (bool) {
+            backBtn.style.display = 'block';
+            homeBtn.style.display = 'block';
+        } else {
+            backBtn.style.display = 'none';
+            homeBtn.style.display = 'none';
+        }
     }
 };
 

@@ -19,15 +19,15 @@
 		</div>
 		<div class="content">
 			<p class="p-title">Recommendation List</p>
-			<p title="http://m.dic.naver.com">
+			<p title="https://dict.naver.com/">
 				<label>
 					<input type="radio" name="select_dic" idx="0" value="http://m.dic.naver.com">
 					&nbsp;&nbsp;Naver Dictionary(All)
 				</label>
 			</p>
-			<p title="http://m.endic.naver.com/">
+			<p title="https://endic.naver.com/main.nhn?sLn=en">
 				<label>
-					<input type="radio" name="select_dic" idx="1" value="http://m.endic.naver.com/" checked>
+					<input type="radio" name="select_dic" idx="1" value="https://endic.naver.com/main.nhn?sLn=en" checked>
 					&nbsp;&nbsp;Naver Dictionary(for English)
 				</label>
 			</p>
@@ -59,10 +59,16 @@
 				<span>Always on Top</span>
 			</p>
 			<p>
-				<label><input type="radio" name="always-mb-ua" value="ON"> On</label>
-				<label><input type="radio" name="always-mb-ua" value="OFF" checked> Off</label>
+				<label><input type="radio" name="always-mb-ua" value="ON" checked> On</label>
+				<label><input type="radio" name="always-mb-ua" value="OFF"> Off</label>
 				<span style="padding:0px 5px">|</span>
 				<span>Always mobile UA</span>
+			</p>
+			<p>
+				<label><input type="radio" name="always-navigation" value="ON" checked> On</label>
+				<label><input type="radio" name="always-navigation" value="OFF"> Off</label>
+				<span style="padding:0px 5px">|</span>
+				<span>Show home & back</span>
 			</p>
 		</div>
 		<div class="footer">
@@ -73,20 +79,5 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="scripts/default.js"></script>
-	<script>
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o),
-				m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-		ga('create', 'UA-71656603-1', 'auto');
-		ga('send', 'pageview');
-	</script>
 </body>
 </html>
